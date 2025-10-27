@@ -1,0 +1,7 @@
+id=lockdown
+name=Android Lockdown mode
+version=v1
+versionCode=1
+author=Thanfees & Aabir
+description=This is lockdown mode for android. some support modules will be install automatically 
+updateJson=#
