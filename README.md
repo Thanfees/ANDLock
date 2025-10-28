@@ -1,6 +1,6 @@
 # 🔒 Android Lockdown Mode — Magisk Module
 
-A powerful system-level **Lockdown Mode** for rooted Android devices built as a Magisk module. Designed to **disable all non-essential apps**, **restrict hardware and network access**, and optionally enable **Universal GMS Doze**, **ad-blocking**, and **real-time malware monitoring**.
+A powerful system-level **Lockdown Mode** for rooted Android devices built as a Magisk module. Designed to **disable all non-essential apps**, **restrict hardware and network access**, and optionally enable **ad-blocking** and **real-time malware monitoring**.
 
 ---
 
@@ -11,9 +11,8 @@ A powerful system-level **Lockdown Mode** for rooted Android devices built as a 
 - 📡 Disable Wi-Fi, mobile data, Bluetooth, NFC, and location
 - 🌐 Optional: Force 2G-only network mode
 - 🚫 Internet firewall using `iptables` (cut off all app network access)
-- 🧠 Includes Universal GMS Doze module to reduce Google background drain
 - 📛 Ad-blocking using community-sourced `hosts` file
-- 🔍 Advanced malware/suspicious activity detection
+- 🔍 Malware & suspicious activity detection with on-device heuristics
 - 🛡️ Root-based permission reversion (`revert` command)
 
 ---
@@ -30,9 +29,7 @@ lockdown/<br>
 │ └── lockdown # CLI control tool<br>
 ├── lockdown/<br>
 │ ├── adblock.sh # Hosts-based adblock script<br>
-│ ├── detect_malware.sh # Advanced malware detection<br>
-│ └── gmsdoze/ # Embedded Universal GMS Doze module<br>
-│ └── module.prop # (id=universal-gms-doze)<br>
+│ ├── detect_malware.sh # Heuristic malware/suspicious activity scan<br>
 └── system/<br>
 │ └── etc/<br>
 │   └── lockdown_allowlist.txt<br>
@@ -49,14 +46,17 @@ Command	        Description
 enable	        Activates lockdown mode
 disable        	Restores normal mode and permissions
 
+### Malware / Suspicious Activity Scan
+
+- Every time lockdown mode starts, `detect_malware.sh` runs a heuristic scan against installed apps and running tooling commonly abused by malware.
+- Findings are written to `/data/adb/modules/lockdown/logs/malware_scan.log`; review this file for severity, matched indicators, and follow-up actions.
+- If nothing is flagged, the scan still records a timestamped entry confirming a clean result.
+
 🤝 Contributors Welcome!
 We actively welcome developers, testers, and security researchers to contribute. If you have ideas for new detection methods, eBPF integrations, or UI controls — fork this repo and send us a pull request!
 
 🙏 Credits
 Special thanks to the developers of:
-
-Universal GMS Doze
-For their excellent work in optimizing Google services' power usage.
 
 Membacfro
 For their early contributions to permission enforcement and background process hardening.

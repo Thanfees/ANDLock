@@ -12,6 +12,13 @@ if [ ! -f "$LOCKDOWN_FLAG" ]; then
     exit 0
 fi
 
+# Step 0: Run malware / suspicious activity scan
+if [ -f "$ADB_MODULE_DIR/detect_malware.sh" ]; then
+    sh "$ADB_MODULE_DIR/detect_malware.sh"
+else
+    echo "[Warning] detect_malware.sh not found in module directory"
+fi
+
 # Step 1: Disable non-allowlisted third-party apps
 echo "[Lockdown] Disabling third-party apps..."
 pm list packages -3 | cut -d ":" -f 2 | while read pkg; do
