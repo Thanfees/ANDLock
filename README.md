@@ -1,4 +1,4 @@
-# 🔒 Android Lockdown Mode — Magisk Module
+# 🔒 Android Lockdown Mode (ANDLock)— Magisk Module
 
 A powerful system-level **Lockdown Mode** for rooted Android devices built as a Magisk module. Designed to **disable all non-essential apps**, **restrict hardware and network access**, and optionally enable **ad-blocking** and **real-time malware monitoring**.
 
@@ -19,20 +19,33 @@ A powerful system-level **Lockdown Mode** for rooted Android devices built as a 
 
 ## 📁 Folder Structure
 
-lockdown/<br>
-├── module.prop<br>
-├── post-fs-data.sh<br>
-├── service.sh<br>
-├── uninstall.sh<br>
-├── system.prop<br>
-├── bin/<br>
-│ └── lockdown # CLI control tool<br>
-├── lockdown/<br>
-│ ├── adblock.sh # Hosts-based adblock script<br>
-│ ├── detect_malware.sh # Heuristic malware/suspicious activity scan<br>
-└── system/<br>
-│ └── etc/<br>
-│   └── lockdown_allowlist.txt<br>
+```
+.
+├── module.prop               # Magisk module metadata
+├── post-fs-data.sh           # Startup script for early boot tweaks
+├── service.sh                # Main service loop for lockdown enforcement
+├── uninstall.sh              # Cleanup logic when the module is removed
+├── adblock.sh                # Hosts-based adblocking helper
+├── blockinternet.sh          # Globally revoke network access
+├── unblockinternet.sh        # Restore network access
+├── cam_block.sh              # Disable camera HAL access
+├── cam_unblock.sh            # Restore camera access
+├── mic_block.sh              # Disable microphone input
+├── mic_unblock.sh            # Restore microphone input
+├── detect_malware.sh         # Heuristic malware / anomaly scanner
+├── META-INF/                 # Magisk packaging metadata
+│   └── com/google/android/ {update-binary, updater-script}
+├── support_modules/
+│   └── MemBacFro/            # Bundled dependency for permission hardening
+│       ├── install.sh
+│       ├── module.prop
+│       ├── common/system.prop
+│       └── META-INF/com/google/android/ {update-binary, updater-script}
+└── system/
+    ├── bin/lockdown          # CLI entrypoint exposed to `/system/bin`
+    ├── etc/lockdown_allowlist.txt
+    └── placeholder           # Ensures `/system` folder packaged correctly
+```
 
 
 ---
